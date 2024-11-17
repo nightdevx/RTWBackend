@@ -2,7 +2,15 @@ import { Schema, model, Document, Types } from "mongoose";
 
 interface IMailPackage extends Document {
   interviewId: Types.ObjectId;
-  template?: {
+  infoTemplate?: {
+    subject: string;
+    text: string;
+  };
+  acceptTemplate?: {
+    subject: string;
+    text: string;
+  };
+  rejectTemplate?: {
     subject: string;
     text: string;
   };
@@ -10,6 +18,7 @@ interface IMailPackage extends Document {
     mail: string;
     mailStatus: string;
     interviewStatus: string;
+    approvalStatus: string;
   }>;
 }
 
@@ -19,7 +28,27 @@ const mailPackageSchema = new Schema<IMailPackage>(
       type: Schema.Types.ObjectId,
       required: true,
     },
-    template: {
+    infoTemplate: {
+      subject: {
+        type: String,
+        default: "",
+      },
+      text: {
+        type: String,
+        default: "",
+      },
+    },
+    acceptTemplate: {
+      subject: {
+        type: String,
+        default: "",
+      },
+      text: {
+        type: String,
+        default: "",
+      },
+    },
+    rejectTemplate: {
       subject: {
         type: String,
         default: "",
@@ -44,6 +73,10 @@ const mailPackageSchema = new Schema<IMailPackage>(
         interviewStatus: {
           type: String,
           default: "not-done",
+        },
+        approvalStatus: {
+          type: String,
+          default: "waiting",
         },
       },
     ],

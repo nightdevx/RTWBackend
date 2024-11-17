@@ -61,8 +61,19 @@ export const deleteMailPackage = async (id: string) => {
   return await Mail.findByIdAndDelete(id);
 };
 
-export const updateMailTemplate = async (id: string, newTemplate: string) => {
-  return await Mail.updateOne({ _id: id }, { $set: { template: newTemplate } });
+export const updateMailTemplate = async (
+  id: string,
+  type: string,
+  newTemplate: string
+) => {
+  if (!["info", "accept", "reject"].includes(type)) {
+    throw new Error("Invalid template type");
+  }
+
+  return await Mail.updateOne(
+    { _id: id },
+    { $set: { [`${type}Template`]: newTemplate } }
+  );
 };
 
 //Mail service
@@ -149,9 +160,22 @@ export const markInterviewAsDone = async (
   interviewId: string,
   mail: string
 ) => {
-  console.log(interviewId, mail);
   return await Mail.updateOne(
     { interviewId, "userMails.mail": mail },
     { $set: { "userMails.$.interviewStatus": "done" } }
+  );
+};
+
+export const updateApprovalStatus = async (
+  id: string,
+  mail: string,
+  approvalStatus: string
+) => {
+  console.log("id", id);
+  console.log("mail", mail);
+  console.log("approval", approvalStatus);
+  return await Mail.updateOne(
+    { interviewId: id, "userMails.mail": mail },
+    { $set: { "userMails.$.approvalStatus": approvalStatus.toLowerCase() } }
   );
 };

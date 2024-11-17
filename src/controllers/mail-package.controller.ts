@@ -67,9 +67,10 @@ export const deleteMailPackage = async (req: Request, res: Response) => {
 export const updateMailTemplate = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { template } = req.body;
+    const { template, type } = req.body;
     const updatedMail = await mailPackageService.updateMailTemplate(
       id,
+      type,
       template
     );
     if (!updatedMail) {
@@ -173,6 +174,24 @@ export const markInterviewAsDone = async (req: Request, res: Response) => {
         .json({ message: "Mail not found or interview not marked as done" });
     }
     res.status(200).json({ message: "Interview marked as done successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateApprovalStatus = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { mail, status } = req.body;
+    const updatedMail = await mailPackageService.updateApprovalStatus(
+      id,
+      mail,
+      status
+    );
+    if (!updatedMail) {
+      return res.status(404).json({ message: "Mail not found or not updated" });
+    }
+    res.status(200).json({ message: "Approval status updated successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
