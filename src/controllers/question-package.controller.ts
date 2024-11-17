@@ -111,7 +111,9 @@ export const updateQuestionInPackage = async (req: Request, res: Response) => {
       updatedQuestion
     );
     if (!questionPackage) {
-      return res.status(404).json({ message: "QuestionPackage or Question not found" });
+      return res
+        .status(404)
+        .json({ message: "QuestionPackage or Question not found" });
     }
     res.status(200).json(questionPackage);
   } catch (error) {
@@ -119,21 +121,19 @@ export const updateQuestionInPackage = async (req: Request, res: Response) => {
   }
 };
 
-export const removeQuestionFromPackage = async (
+export const removeQuestionsFromPackage = async (
   req: Request,
   res: Response
 ) => {
   try {
     const packId = req.params.packId;
-    const questionId = req.params.questId;
-    const questionPackage = await QuestionPackService.removeQuestionFromPackage(
-      packId,
-      questionId
-    );
+    const questionIds = req.body.ids;
+    console.log("packId", packId, "ids", req.body);
+    const questionPackage =
+      await QuestionPackService.removeQuestionsFromPackage(packId, questionIds);
     if (!questionPackage) {
       return res.status(404).json({ message: "QuestionPackage not found" });
     }
-    // const response = new GeneralResponseDto();
     res.status(200).json(questionPackage);
   } catch (error) {
     handleError(res, error, 400);

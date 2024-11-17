@@ -61,7 +61,7 @@ const deleteUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     await UserService.deleteUser(id);
-    res.send("User deleted successfully.");
+    res.status(200).send("User deleted successfully.");
   } catch (err: any) {
     res.status(404).send(err.message);
   }

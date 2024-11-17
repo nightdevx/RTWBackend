@@ -82,13 +82,13 @@ export const updateQuestionInPackage = async (
   ).populate("questions");
 };
 
-export const removeQuestionFromPackage = async (
+export const removeQuestionsFromPackage = async (
   id: string,
-  questionId: string
+  questionIds: string[]
 ): Promise<IQuestionPackage | null> => {
   const result = await QuestionPackage.findByIdAndUpdate(
     id,
-    { $pull: { questions: { _id: questionId } } },
+    { $pull: { questions: { _id: { $in: questionIds } } } },
     { new: true }
   ).populate("questions");
 

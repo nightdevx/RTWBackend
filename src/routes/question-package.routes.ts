@@ -36,10 +36,10 @@ router.put(
   authMiddleware,
   QuestionPackageController.updateQuestionInPackage
 );
-router.delete(
-  "/remove-question/:packId/:questId",
+router.patch(
+  "/remove-question/:packId",
   authMiddleware,
-  QuestionPackageController.removeQuestionFromPackage
+  QuestionPackageController.removeQuestionsFromPackage
 );
 
 export default router;
