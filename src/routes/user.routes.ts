@@ -10,6 +10,7 @@ const router = Router();
 router.post("/register", masterAuthMiddleware, UserController.register);
 router.post("/login", UserController.login);
 router.get("/:id", authMiddleware, UserController.getUser);
+router.delete("/:id", masterAuthMiddleware, UserController.deleteUser);
 router.get("/", masterAuthMiddleware, UserController.getAllUsers);
 router.post("/checkIsMaster", authMiddleware, UserController.checkIsMaster);
 

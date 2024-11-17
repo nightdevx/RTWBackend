@@ -53,6 +53,10 @@ const getAllUsers = async () => {
   return users;
 };
 
+const deleteUser = async (id: string) => {
+  await User.findByIdAndDelete(id);
+};
+
 const checkIsMaster = async (id: string) => {
   if (id === "master") {
     return true;
@@ -66,4 +70,5 @@ export default {
   getUserById,
   getAllUsers,
   checkIsMaster,
+  deleteUser,
 };

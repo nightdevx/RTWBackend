@@ -57,10 +57,21 @@ const checkIsMaster = async (req: Request, res: Response) => {
   }
 };
 
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const id = req.body.user.id;
+    await UserService.deleteUser(id);
+    res.send("User deleted successfully.");
+  } catch (err: any) {
+    res.status(404).send(err.message);
+  }
+};
+
 export default {
   register,
   login,
   getUser,
   getAllUsers,
   checkIsMaster,
+  deleteUser,
 };
