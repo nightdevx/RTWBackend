@@ -59,7 +59,7 @@ const checkIsMaster = async (req: Request, res: Response) => {
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
-    const id = req.body.user.id;
+    const { id } = req.params;
     await UserService.deleteUser(id);
     res.send("User deleted successfully.");
   } catch (err: any) {
