@@ -2,16 +2,9 @@ import User from "../models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// const secret = process.env.JWT_SECRET;
-
-const register = async (
-  username: string,
-  company: string,
-  email: string,
-  password: string
-) => {
+const register = async (username: string, email: string, password: string) => {
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({ username, company, email, password: hashedPassword });
+  const user = new User({ username, email, password: hashedPassword });
   await user.save();
   return user;
 };
